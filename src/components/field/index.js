@@ -79,7 +79,6 @@ export default class TextField extends PureComponent {
       input: PropTypes.number,
       left: PropTypes.number,
       right: PropTypes.number,
-      bottom: PropTypes.number,
     }),
 
     labelOffset: Label.propTypes.offset,
@@ -129,7 +128,6 @@ export default class TextField extends PureComponent {
     input: 8,
     left: 0,
     right: 0,
-    bottom: 8,
   };
 
   static labelOffset = {
@@ -139,18 +137,13 @@ export default class TextField extends PureComponent {
     y1: 0,
   };
 
- static getDerivedStateFromProps({ error, value }, state) {
-    let update = {};
+  static getDerivedStateFromProps({ error }, state) {
     /* Keep last received error in state */
     if (error && error !== state.error) {
-       update.error = error;
-    }
-    /* Keep last value in state */
-    if (value !== state.text) {
-      update.text = value;
+      return { error };
     }
 
-    return update;
+    return null;
   }
 
   constructor(props) {
@@ -229,7 +222,6 @@ export default class TextField extends PureComponent {
     let options = {
       toValue: this.focusState(),
       duration,
-      useNativeDriver: false
     };
 
     startAnimation(focusAnimation, options, this.onFocusAnimationEnd);
@@ -578,7 +570,6 @@ export default class TextField extends PureComponent {
     let containerStyle =  {
       paddingLeft: contentInset.left,
       paddingRight: contentInset.right,
-      minHeight: contentInset.bottom,
     };
 
     let styleProps = {
